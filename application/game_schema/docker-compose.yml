@@ -1,0 +1,14 @@
+# Using django Dockerfile structure per this post:
+# https://medium.com/backticks-tildes/how-to-dockerize-a-django-application-a42df0cb0a99
+
+version: '3'
+
+services:
+  web:
+    build: .
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    container_name: game_schema_poc
+    volumes:
+      - .:/game_schema_poc
+    ports:
+      - "8000:8000"
