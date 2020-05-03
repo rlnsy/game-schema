@@ -4,8 +4,11 @@ from .games_players import Agent
 
 
 class Session(models.Model):
+    creator_agent_id = models.ForeignKey(Agent, on_delete=models.SET_NULL, null=True)
     game_id = models.ForeignKey(Game, on_delete=models.CASCADE)
     time_init = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return "%s:%s: %s" % (self.time_init, self.creator_agent_id, self.game_id)
 
 
 """

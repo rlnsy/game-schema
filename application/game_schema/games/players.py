@@ -1,6 +1,7 @@
 from games.models.games_players import Agent, Player, PLAYER_TOKEN_LENGTH, PLAYER_TOKEN_CHARS
-from util.fn_request import (req_fields as fields_or_403, assert_nexist)
+from util.fn_request import (req_fields as fields_or_403, assert_nexist, get_by_id)
 from rest_framework.views import Response
+from util import http_status as status
 import random
 
 def create_agent(name, k):
@@ -30,3 +31,14 @@ def create_player(request):
             lambda d: 
                 create_agent(d['user_name'], 
                 create_player_from_agent(d['display_name'])))
+
+
+def auth_player(name, token, k):
+    def check_token(p, k):
+        if p.token == token:
+            return k(p)
+        else:
+            return Response("Bad token for player '%s'" % name, 
+                    status=status.CLIENT_FORBIDDEN)
+    return get_by_id(Player, name,
+        lambda p: check_token(p, k))
