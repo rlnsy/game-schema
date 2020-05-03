@@ -11,9 +11,9 @@ CREATE TABLE Agent(
 
 CREATE TABLE Player (
     agent_id char(50) PRIMARY KEY,
-    display_name char(50),
-    player_token char(50) NOT NULL,
-    FOREIGN KEY agent_id REFERENCES Agent(id)
+    display_name char(50) NOT NULL,
+    token char(50) NOT NULL,
+    FOREIGN KEY agent_id REFERENCES Agent(id) ON DELETE CASCADE
 );
 
 CREATE TABLE GameRole (
@@ -34,7 +34,9 @@ CREATE TABLE GameAction (
     -- module logic.
     --
     id int PRIMARY KEY,
-    subtype_id char(100) NOT NULL 
+    game_id char(50),
+    subtype_id char(100) NOT NULL,
+    FOREIGN KEY (game_id) REFERENCES Game (id) ON DELETE CASCADE
 );
 
 -- Session-dynamic --
@@ -42,17 +44,19 @@ CREATE TABLE GameAction (
 
 CREATE TABLE GameSession (
     id int PRIMARY KEY,
-    game_id char(50)
+    game_id char(50),
+    FOREIGN KEY (game_id) REFERENCES Game (id) ON DELETE CASCADE
 );
 
 CREATE TABLE HasRole (
     game_session_id int,
     agent_id char(50),
     game_role_id char(50),
+    is_active boolean,
     PRIMARY KEY (game_session_id, player_name, game_id),
-    FOREIGN KEY (game_session_id) REFERENCES GameSession (id),
-    FOREIGN KEY (agent_id) REFERENCES Agent (id),
-    FOREIGN KEY (game_role_id) REFERENCES GameRole (id),
+    FOREIGN KEY (game_session_id) REFERENCES GameSession (id) ON DELETE CASCADE,
+    FOREIGN KEY (agent_id) REFERENCES Agent (id) ON DELETE CASCADE,
+    FOREIGN KEY (game_role_id) REFERENCES GameRole (id) ON DELETE CASCADE,
 );
 
 CREATE TABLE SessionGameState (

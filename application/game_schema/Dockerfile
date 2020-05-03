@@ -7,3 +7,4 @@ RUN mkdir /game_schema_poc
 ADD . /game_schema_poc/
 WORKDIR /game_schema_poc
 RUN pip install -r requirements.txt
+ENTRYPOINT ["/game_schema_poc/docker_entry.sh"]
