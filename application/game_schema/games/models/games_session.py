@@ -1,5 +1,6 @@
 from django.db import models
-from .games_core import Game, Agent, Role
+from .games_core import Game, Role
+from .games_players import Agent
 
 
 class Session(models.Model):
