@@ -18,3 +18,8 @@ from .players import create_player
 class PlayerAPIView(APIView):
     def post(self, request):
         return create_player(request)
+
+from .session import create_session
+class SessionAPIView(APIView):
+    def post(self, request):
+        return create_session(request)
