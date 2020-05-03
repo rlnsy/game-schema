@@ -14,12 +14,12 @@ class GameListAPIView(generics.ListAPIView):
     permission_classes = [AllowAny]
 
 
-from .players import create_player
+from .api.external.players import create_player
 class PlayerAPIView(APIView):
     def post(self, request):
         return create_player(request)
 
-from .session import create_session
+from .api.external.session import create_session
 class SessionAPIView(APIView):
     def post(self, request):
         return create_session(request)
