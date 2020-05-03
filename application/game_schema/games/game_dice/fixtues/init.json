@@ -1,0 +1,22 @@
+[
+    {
+        "model": "games.Game",
+        "fields": {
+            "id": "Dice"
+        }
+    },
+    {
+        "model": "games.Role",
+        "fields": {
+            "id": "Dice_roller",
+            "game_id": "Dice"
+        }
+    },
+    {
+        "model": "games.Action",
+        "fields": {
+            "game_id": "Dice",
+            "subtype_id": "Dice_RollAction"
+        }
+    }
+]
