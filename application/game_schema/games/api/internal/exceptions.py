@@ -1,0 +1,2 @@
+class AlreadyHasRole(Exception):
+    pass
