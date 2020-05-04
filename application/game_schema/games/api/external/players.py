@@ -1,7 +1,7 @@
 from games.models.games_players import Agent, Player, PLAYER_TOKEN_LENGTH, PLAYER_TOKEN_CHARS
-from util.fn_request import (req_fields as fields_or_403, assert_nexist, get_by_id)
+from .util.fn_request import (req_fields as fields_or_403, assert_nexist, get_by_id)
 from rest_framework.views import Response
-from util import http_status as status
+from .util import http_status as status
 import random
 
 def create_agent(name, k):

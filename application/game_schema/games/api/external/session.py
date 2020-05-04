@@ -1,9 +1,9 @@
 from games.models.games_session import Session
 from games.models.games_core import Game
-from util.fn_request import (req_fields as fields_or_403, get_by_id)
+from .util.fn_request import (req_fields as fields_or_403, get_by_id)
 from .players import auth_player
 from rest_framework.views import Response
-from util import http_status as status
+from .util import http_status as status
 from .logic_dispatch import find as find_logic
 
 def create_success():

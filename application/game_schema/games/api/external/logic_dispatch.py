@@ -1,6 +1,6 @@
 from games import index
 from rest_framework.views import Response
-from util import http_status as status
+from .util import http_status as status
 
 def find(game_id, k):
 
