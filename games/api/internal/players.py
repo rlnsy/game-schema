@@ -57,7 +57,9 @@ def list_players():
 
 
 def delete_player(name, token):
-    return remove_by_id(Player, name,
-        lambda: {
-            'message': "Player '%s' deleted" % name
-        })
+    return auth_player(name, token,
+        lambda p:
+            remove_by_id(Player, name,
+                lambda: {
+                    'message': "Player '%s' deleted" % name
+                }))

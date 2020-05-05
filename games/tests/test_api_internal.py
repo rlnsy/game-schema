@@ -18,7 +18,9 @@ class GameResourceTests(TestCase):
         self.assertEqual(len(games), 1)
         self.assertEqual(games[0], {'id': 'Dice'})
 
+
 from games.api.internal.players import list_players, create_player, delete_player
+from games.api.internal.exceptions import NotAllowed, NotFound
 class PlayerResourceTests(TestCase):
 
     def test_players_empty(self):
@@ -50,6 +52,38 @@ class PlayerResourceTests(TestCase):
         players = list_players()
         self.assertEqual(len(players), 0)
 
+    def test_players_unique(self):
+        user_name = 'test1'
+        display_name = "Test user 1"
+        create_player(user_name, display_name)
+        display_name_2 = "Test user 2"
+        try:
+            create_player(user_name, display_name_2)
+            self.fail()
+        except NotAllowed:
+            pass
+
+    def test_delete_nexist(self):
+        self.assertEqual(list_players(), [])
+        try:
+            delete_player('test1', "asbchjcjkd")
+            self.fail()
+        except NotFound:
+            pass
+
+    def test_delete_wrong_token(self):
+        self.assertEqual(list_players(), [])
+        user_name = 'test1'
+        display_name = "Test user 1"
+        result = create_player(user_name, display_name)
+        token = result['player_token']
+        wrong_token = "asbchjcjkd"
+        self.assertNotEqual(wrong_token, token)
+        try:
+            delete_player(user_name, wrong_token)
+            self.fail()
+        except NotAllowed:
+            self.assertEqual(len(list_players()), 1)
 
 class SessionResourceTests(TestCase):
 
