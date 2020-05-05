@@ -1,3 +1,4 @@
 class GameLogic:
 
-    pass
+    def default_creator_roles(self):
+        return []

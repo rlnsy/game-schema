@@ -167,16 +167,37 @@ class RoleAdoptionTests(TestCase):
 
     def test_adopt_role(self):
         game_id = list_games()[0]['id']
+        role_id = list_roles(game_id)[0]['id']
         user_name = 'test1'
         display_name = "Test user 1"
         token = create_player(user_name, display_name)['player_token']
         session_id = create_session(game_id, user_name, token)['session_id']
+        roles = list_session_roles(session_id, user_name, token)
+        self.assertEqual(len(roles), 1)
+        self.assertEqual(roles[0], {
+            'user_name': user_name,
+            'role_id': role_id,
+            'active': True
+        })
         try:
-            self.assertEqual(list_session_roles(session_id, user_name, token), [])
+            adopt_role(user_name, role_id, session_id)
         except NotAllowed:
             pass
-        role_id = list_roles(game_id)[0]['id']
-        adopt_role(user_name, role_id, session_id)
+        roles = list_session_roles(session_id, user_name, token)
+        self.assertEqual(len(roles), 1)
+
+
+class LogWrapperTests(TestCase):
+
+    fixtures = ["dice"]
+
+    def test_default_creator_roles(self):
+        game_id = list_games()[0]['id']
+        role_id = list_roles(game_id)[0]['id'] # there is only one role
+        user_name = 'test1'
+        display_name = "Test user 1"
+        token = create_player(user_name, display_name)['player_token']
+        session_id = create_session(game_id, user_name, token)['session_id']
         roles = list_session_roles(session_id, user_name, token)
         self.assertEqual(len(roles), 1)
         self.assertEqual(roles[0], {
@@ -185,3 +206,4 @@ class RoleAdoptionTests(TestCase):
             'active': True
         })
 
+    """ TODO: add error cases """

@@ -2,4 +2,5 @@ from games.logic_interface import GameLogic
 
 class DiceLogic(GameLogic):
 
-    pass
+    def default_creator_roles(self):
+        return ['Dice_roller']

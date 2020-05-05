@@ -5,7 +5,8 @@ from .logic_dispatch import find as find_logic
 from .util.model_ops import get_by_id, remove_by_id, assert_nexist, assert_exist
 from .players import auth_player
 from rest_framework import serializers
-from .exceptions import NotFound, NotAllowed
+from .exceptions import NotFound, NotAllowed, LogicKeyError
+from .util.game_wrapper import exec_logic
 
 class SessionSerializer(serializers.HyperlinkedModelSerializer):
     creator_agent_id = serializers.PrimaryKeyRelatedField(
@@ -29,16 +30,27 @@ def list_sessions():
     return list([transform(SessionSerializer(s).data) for s in sessions])
 
 def create_game_session(creator, game):
-    def create(game_logic):
-        s = Session(creator_agent_id=creator.agent_id, game_id=game)
-        s.save()
-        session_id = s.pk
-        # TODO adopt default role for creator
-        return {
-            'message': "Session created",
-            'session_id': session_id
-        }
-    return find_logic(game.id, create)
+    def adopt_creator_roles(game_logic, session_id, k):
+        def adopt_all(roles, k):
+            for r in roles:
+                try:
+                    adopt_role(creator.agent_id, r, session_id)
+                except NotFound:
+                    raise LogicKeyError(r)
+            return k()
+        return exec_logic(
+            game_logic.default_creator_roles,
+            lambda r: adopt_all(r, k))
+    s = Session(creator_agent_id=creator.agent_id, game_id=game)
+    s.save()
+    session_id = s.pk
+    return find_logic(game.id,
+        lambda l:
+            adopt_creator_roles(l, session_id,
+                lambda: {
+                    'message': "Session created",
+                    'session_id': session_id
+                }))
 
 def create_session(game_id, creator_name, creator_token):
     return auth_player(
