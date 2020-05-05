@@ -11,7 +11,7 @@ class GameResourceEmptyTests(TestCase):
 
 class GameResourceTests(TestCase):
 
-    fixtures = ["dice"]
+    fixtures = ["dice"] # intstall the demo game for these tests
 
     def test_list_empty(self):
         games = list_games()
@@ -42,6 +42,7 @@ class PlayerResourceTests(TestCase):
         players = list_players()
         self.assertEqual(len(players), 1)
         player = players[0]
+        self.assertEqual(len(player.keys()), 2)
         self.assertEqual(player['user_name'], user_name)
         self.assertEqual(player['display_name'], display_name)
         # delete
@@ -63,7 +64,7 @@ class PlayerResourceTests(TestCase):
         except NotAllowed:
             pass
 
-    def test_delete_nexist(self):
+    def test_delete_player_nexist(self):
         self.assertEqual(list_players(), [])
         try:
             delete_player('test1', "asbchjcjkd")
@@ -71,7 +72,7 @@ class PlayerResourceTests(TestCase):
         except NotFound:
             pass
 
-    def test_delete_wrong_token(self):
+    def test_delete_player_wrong_token(self):
         self.assertEqual(list_players(), [])
         user_name = 'test1'
         display_name = "Test user 1"
@@ -85,7 +86,58 @@ class PlayerResourceTests(TestCase):
         except NotAllowed:
             self.assertEqual(len(list_players()), 1)
 
+from games.api.internal.session import create_session, list_sessions, delete_session
 class SessionResourceTests(TestCase):
 
-    def test_create_session(self):
-        pass
+    fixtures = ["dice"]
+
+    def test_add_delete_session(self):
+        game_id = list_games()[0]['id']
+        self.assertEqual(list_players(), [])
+        # create
+        user_name = 'test1'
+        display_name = "Test user 1"
+        token = create_player(user_name, display_name)['player_token']
+        result = create_session(game_id, user_name, token)
+        self.assertEqual(len(result.keys()), 2)
+        self.assertIn('message', result)
+        session_id = result['session_id']
+        # get
+        sessions = list_sessions()
+        self.assertEqual(len(sessions), 1)
+        sesh = sessions[0]
+        self.assertEqual(len(sesh.keys()), 3)
+        self.assertIn('started', sesh)
+        self.assertEqual(sesh['creator_id'], user_name)
+        self.assertEqual(sesh['game_id'], game_id)
+        # delete
+        del_result = delete_session(session_id, user_name, token)
+        self.assertIsInstance(del_result, dict)
+        self.assertEqual(len(del_result.keys()), 1)
+        self.assertIn('message', del_result)
+        sessions = list_sessions()
+        self.assertEqual(len(sessions), 0)
+
+    def test_delete_session_nexist(self):
+        self.assertEqual(list_sessions(), [])
+        try:
+            delete_session('Mario', 'test1', "asbchjcjkd")
+            self.fail()
+        except NotFound:
+            pass
+
+    def test_delete_session_wrong_token(self):
+        self.assertEqual(list_players(), [])
+        user_name = 'test1'
+        display_name = "Test user 1"
+        result = create_player(user_name, display_name)
+        token = result['player_token']
+        wrong_token = "asbchjcjkd"
+        self.assertNotEqual(wrong_token, token)
+        game_id = list_games()[0]['id']
+        session_id = create_session(game_id, user_name, token)['session_id']
+        try:
+            delete_session(session_id, user_name, wrong_token)
+            self.fail()
+        except NotAllowed:
+            self.assertEqual(len(list_players()), 1)
