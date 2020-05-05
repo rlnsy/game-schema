@@ -65,6 +65,8 @@ class SessionRoleSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['session_id', 'agent_id', 'role_id', 'is_active']
 
 def list_session_roles(session_id, player_name, player_token):
+    if type(session_id) is not int:
+        raise Exception("session_id must be an integer")
     serialize = SessionRoleSerializer
     def transform(record):
         return {
