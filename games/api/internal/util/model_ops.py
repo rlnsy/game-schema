@@ -8,6 +8,12 @@ def assert_nexist(queryset, k):
     else:
         raise NotAllowed("Object already exists")
 
+def assert_exist(queryset, k, error_msg="No matching object"):
+    if queryset.count() > 0:
+        return k()
+    else:
+        raise NotFound(error_msg)
+
 
 def get_by_id(model, id, k):
     try:

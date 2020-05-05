@@ -1,5 +1,5 @@
 from django.test import TestCase
-
+from games.api.internal.exceptions import NotAllowed, NotFound
 
 from games.api.internal.games import list_games
 class GameResourceEmptyTests(TestCase):
@@ -19,8 +19,25 @@ class GameResourceTests(TestCase):
         self.assertEqual(games[0], {'id': 'Dice'})
 
 
+from games.api.internal.games import list_roles
+class RoleResourceTests(TestCase):
+
+    fixtures = ["dice"]
+    
+    def test_list_roles_bad_game(self):
+        try:
+            roles = list_roles('Mario')
+            self.fail()
+        except NotFound:
+            pass
+
+    def test_list_roles(self):
+        roles = list_roles('Dice')
+        self.assertEqual(len(roles), 1)
+        self.assertEqual(roles[0], { 'id': 'Dice_roller'})
+
+
 from games.api.internal.players import list_players, create_player, delete_player
-from games.api.internal.exceptions import NotAllowed, NotFound
 class PlayerResourceTests(TestCase):
 
     def test_players_empty(self):
@@ -141,3 +158,30 @@ class SessionResourceTests(TestCase):
             self.fail()
         except NotAllowed:
             self.assertEqual(len(list_players()), 1)
+
+
+from games.api.internal.session import adopt_role, list_session_roles
+class RoleAdoptionTests(TestCase):
+
+    fixtures = ["dice"]
+
+    def test_adopt_role(self):
+        game_id = list_games()[0]['id']
+        user_name = 'test1'
+        display_name = "Test user 1"
+        token = create_player(user_name, display_name)['player_token']
+        session_id = create_session(game_id, user_name, token)['session_id']
+        try:
+            self.assertEqual(list_session_roles(session_id, user_name, token), [])
+        except NotAllowed:
+            pass
+        role_id = list_roles(game_id)[0]['id']
+        adopt_role(user_name, role_id, session_id)
+        roles = list_session_roles(session_id, user_name, token)
+        self.assertEqual(len(roles), 1)
+        self.assertEqual(roles[0], {
+            'user_name': user_name,
+            'role_id': role_id,
+            'active': True
+        })
+
