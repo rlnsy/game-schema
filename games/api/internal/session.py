@@ -10,7 +10,8 @@ def create_game_session(creator, game):
         s.save()
         game_logic.on_session_create(creator.agent_id)
         return {
-            'message': "Session created"
+            'message': "Session created",
+            'session_id': s.pk
         }
     return find_logic(game.id, create)
 
@@ -22,6 +23,8 @@ def create_session(game_id, creator_name, creator_token):
                     get_by_id(Game, game_id, 
                 lambda g: 
                     create_game_session(p, g)))
+
+#def delete_session(session_id, )
 
 # def adopt_role(agent, role, session):
 #     def create():

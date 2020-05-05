@@ -1,7 +1,9 @@
 from games.models.games_players import Agent, Player, PLAYER_TOKEN_LENGTH, PLAYER_TOKEN_CHARS
 import random
 from .exceptions import NotAllowed
-from .util.model_ops import assert_nexist, get_by_id
+from .util.model_ops import assert_nexist, get_by_id, remove_by_id
+from rest_framework import serializers
+
 
 def create_agent(name, k):
     def create():
@@ -24,8 +26,8 @@ def create_player_from_agent(display_name):
     return fn
 
 def create_player(user_name, display_name):
-    create_agent(user_name,
-    create_player_from_agent(display_name))
+    return create_agent(user_name,
+                create_player_from_agent(display_name))
 
 def auth_player(name, token, k):
     def check_token(p, k):
@@ -35,3 +37,27 @@ def auth_player(name, token, k):
             raise NotAllowed("Bad token for player '%s'" % name)
     return get_by_id(Player, name,
         lambda p: check_token(p, k))
+
+class PlayerSerializer(serializers.HyperlinkedModelSerializer):
+    agent_id = serializers.PrimaryKeyRelatedField(
+        read_only=True
+    )
+    class Meta:
+        model = Player
+        fields = ['agent_id', 'display_name']
+
+def list_players():
+    players = Player.objects.all()
+    def transform(p):
+        return {
+            'user_name': p['agent_id'],
+            'display_name': p['display_name']
+        }
+    return list([transform(PlayerSerializer(p).data) for p in players])
+
+
+def delete_player(name, token):
+    return remove_by_id(Player, name,
+        lambda: {
+            'message': "Player '%s' deleted" % name
+        })

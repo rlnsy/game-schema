@@ -15,3 +15,9 @@ def get_by_id(model, id, k):
         return k(o)
     except ObjectDoesNotExist:
         raise NotFound("Could not find %s with id '%s'" % (str(model), id))
+
+def remove_by_id(model, id, k):
+    def exec(o):
+        o.delete()
+        return k()
+    return get_by_id(model, id, exec)
