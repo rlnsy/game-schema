@@ -33,7 +33,7 @@ def create_game_session(creator, game):
         s = Session(creator_agent_id=creator.agent_id, game_id=game)
         s.save()
         session_id = s.pk
-        game_logic.on_session_create(creator.agent_id, session_id)
+        # TODO adopt default role for creator
         return {
             'message': "Session created",
             'session_id': session_id
