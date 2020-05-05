@@ -14,7 +14,7 @@ class GameListAPIView(generics.ListAPIView):
     permission_classes = [AllowAny]
 
 from .util.fn_response import wrap_http_response
-from .util.fn_request import req_fields
+from .util.fn_request import req_fields, req_params
 
 from games.api.internal.players import create_player
 class PlayerAPIView(APIView):
@@ -37,3 +37,16 @@ class SessionAPIView(APIView):
                     d['creator_name'],
                     d['creator_token']
                 ), success_create=True))
+
+from games.api.internal.session import list_session_roles
+class SessionRolesAPIView(APIView):
+    def get(self, request, session_id):
+        return req_fields(request,
+            ['player_name', 'player_token'],
+            lambda d:
+            wrap_http_response(
+                lambda: list_session_roles(
+                    session_id,
+                    d['player_name'],
+                    d['player_token']
+                )))
