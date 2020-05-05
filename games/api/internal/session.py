@@ -32,10 +32,11 @@ def create_game_session(creator, game):
     def create(game_logic):
         s = Session(creator_agent_id=creator.agent_id, game_id=game)
         s.save()
-        game_logic.on_session_create(creator.agent_id)
+        session_id = s.pk
+        game_logic.on_session_create(creator.agent_id, session_id)
         return {
             'message': "Session created",
-            'session_id': s.pk
+            'session_id': session_id
         }
     return find_logic(game.id, create)
 
