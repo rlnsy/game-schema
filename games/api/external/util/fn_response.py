@@ -16,8 +16,10 @@ def _parse_exn(e):
         return _respond(msg, status)
     if isinstance(e, exceptions.NotAllowed):
         return res(status.CLIENT_FORBIDDEN)
-    if isinstance(e, exceptions.NotFound):
+    elif isinstance(e, exceptions.NotFound):
         return res(status.CLIENT_NOT_FOUND)
+    elif isinstance(e, exceptions.MissingRequiredData):
+        return res(status.CLIENT_BAD_REQUEST)
     else:
         logging.getLogger(__name__).error(traceback.format_exc())
         return _respond("An error occurred :(", status.SERVER_INTERNAL_ERROR)

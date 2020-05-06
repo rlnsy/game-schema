@@ -21,16 +21,13 @@ def manifest_action(action_type_id, params):
     def verify_action_object(a):
         if not isinstance(a, Action):
             raise GameImplementationError("create_action returned a non-Action")
+        a.action_type_id = action_type_id
+        a.save()
         action_id = a.pk
-        try:
-            get_by_id(Action, action_id,
-                lambda a:
-                    {
-                        'message': "Action record created",
-                        'action_id': action_id
-                    })
-        except NotFound:
-            raise GameImplementationError("create_action did not save action")
+        return {
+            'message': "Action record created",
+            'action_id': action_id
+        }
     def dispatch(t):
         game_id = t.game_id.pk
         return find_logic(game_id,

@@ -7,7 +7,7 @@ class GameLogic:
 
     def create_action(self, action_type_id, params):
         """
-        Should create and instance of Action, save it to the database, and return it
+        Should create and instance of Action and return it
         """
         raise LogicNotImplemented("create_action must be overidden by Logic class")
 

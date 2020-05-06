@@ -9,4 +9,7 @@ class AlreadyHasRole(NotAllowed):
 
 class GameImplementationError(Exception):
     pass
+
+class MissingRequiredData(Exception):
+    pass
     
