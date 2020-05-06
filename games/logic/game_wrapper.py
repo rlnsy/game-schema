@@ -1,4 +1,4 @@
-from games.logic.exceptions import GameLogicError
+from .exceptions import GameLogicError
 
 def exec_logic(logic_proc, k):
     if not callable(logic_proc):

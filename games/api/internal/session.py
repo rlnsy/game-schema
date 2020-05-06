@@ -1,13 +1,13 @@
 from games.models.games_session import HasRole, Session
 from games.models.games_core import Game, Role
 from games.models.games_players import Agent
-from .logic_dispatch import find as find_logic
+from games.logic.logic_dispatch import find as find_logic
 from .util.model_ops import get_by_id, remove_by_id, assert_nexist, assert_exist
 from .players import auth_player
 from rest_framework import serializers
 from .exceptions import NotFound, NotAllowed
 from games.logic.exceptions import LogicKeyError
-from .util.game_wrapper import exec_logic
+from games.logic.game_wrapper import exec_logic
 
 class SessionSerializer(serializers.HyperlinkedModelSerializer):
     creator_agent_id = serializers.PrimaryKeyRelatedField(
