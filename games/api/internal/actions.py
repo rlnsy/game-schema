@@ -1,4 +1,4 @@
-from games.models.games_core import ActionType, Action
+from games.models.games_core import ActionType, Action, Game
 from .util.model_ops import get_by_id
 from games.logic.logic_dispatch import find as find_logic
 from games.logic.game_wrapper import exec_logic
@@ -16,6 +16,11 @@ class ActionTypeSerializer(serializers.HyperlinkedModelSerializer):
 def list_action_types():
     action_types = ActionType.objects.all()
     return list([ActionTypeSerializer(t).data for t in action_types])
+
+def list_action_types_by_game(game_id):
+    return get_by_id(Game, game_id,
+        lambda g:
+            list([ActionTypeSerializer(t).data for t in ActionType.objects.filter(game_id=g)]))
 
 def manifest_action(action_type_id, params):
     def verify_action_object(a):

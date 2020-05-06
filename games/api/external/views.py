@@ -50,3 +50,21 @@ class SessionRolesAPIView(APIView):
                     d['player_name'],
                     d['player_token']
                 )))
+
+
+from games.api.internal.actions import list_action_types_by_game
+class ActionTypesAPIView(APIView):
+    def get(self, request, game_id):
+        return wrap_http_response(
+            lambda: list_action_types_by_game(game_id))
+
+
+from games.api.internal.actions import manifest_action
+class ActionAPIView(APIView):
+    def post(self, request):
+        return req_fields(request,
+            ['action_type_id', 'params'],
+            lambda d:
+            wrap_http_response(
+                lambda: manifest_action(d['action_type_id'], d['params'])
+            ))
