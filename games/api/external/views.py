@@ -22,7 +22,7 @@ class PlayerAPIView(APIView):
         return req_fields(request, ['user_name', 'display_name'],
             lambda d:
             wrap_http_response(
-                lambda: create_player(d['user_name'], d['player_name']),
+                lambda: create_player(d['user_name'], d['display_name']),
                 success_create=True))
 
 from games.api.internal.session import create_session
