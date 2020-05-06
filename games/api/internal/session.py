@@ -5,7 +5,8 @@ from .logic_dispatch import find as find_logic
 from .util.model_ops import get_by_id, remove_by_id, assert_nexist, assert_exist
 from .players import auth_player
 from rest_framework import serializers
-from .exceptions import NotFound, NotAllowed, LogicKeyError
+from .exceptions import NotFound, NotAllowed
+from games.logic.exceptions import LogicKeyError
 from .util.game_wrapper import exec_logic
 
 class SessionSerializer(serializers.HyperlinkedModelSerializer):

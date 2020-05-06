@@ -1,4 +1,4 @@
-from games.logic_interface import GameLogic
+from games.logic.logic_interface import GameLogic
 
 class DiceLogic(GameLogic):
 
