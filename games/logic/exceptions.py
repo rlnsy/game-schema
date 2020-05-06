@@ -1,6 +1,6 @@
 class GameLogicError(Exception):
 
-    def __init__(self, e):
+    def __init__(self, e=None):
         msg = "An error occurred in game logic"
         if e is not None:
             msg = msg + ": %s" % str(e)
@@ -14,3 +14,9 @@ class LogicKeyError(GameLogicError):
         else:
             msg = "Unresolved id '%s'" % str(key)
             super(LogicKeyError, self).__init__(msg)
+
+class LogicNotImplemented(Exception):
+    pass
+
+class LogicNotFound(Exception):
+    pass

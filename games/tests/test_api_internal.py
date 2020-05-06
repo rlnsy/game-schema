@@ -185,3 +185,47 @@ class RoleAdoptionTests(TestCase):
             pass
         roles = list_session_roles(session_id, user_name, token)
         self.assertEqual(len(roles), 1)
+
+
+from games.api.internal.actions import list_action_types, manifest_action, list_actions
+class ActionResourceTests(TestCase):
+
+    fixtures = ["dice"]
+
+    def test_list_action_types(self):
+        ats = list_action_types()
+        self.assertEqual(len(ats), 1)
+        self.assertEqual(ats[0], {
+            'type_id': 'Dice_RollAction',
+            'game_id': 'Dice'
+        })
+
+    def test_manifest_action(self):
+        roll_action_type_id = list_action_types()[0]['type_id']
+        manifest_action(roll_action_type_id, {
+            'num_shakes': 1
+        })
+        actions = list_actions()
+        self.assertEqual(len(actions), 1)
+        self.assertEqual(len(actions[0].keys()), 2)
+        self.assertIn('action_id', actions[0])
+        self.assertEqual(actions[0]['type_id'], roll_action_type_id)
+
+    def test_actions_unique(self):
+        roll_action_type_id = list_action_types()[0]['type_id']
+        manifest_action(roll_action_type_id, {
+            'num_shakes': 1
+        })
+        self.assertEqual(len(list_actions()), 1)
+        manifest_action(roll_action_type_id, {
+            'num_shakes': 2
+        })
+        self.assertEqual(len(list_actions()), 2)
+        """
+        Should able to manifest a duplicate but a duplicate will
+        not be added to the database
+        """
+        manifest_action(roll_action_type_id, {
+            'num_shakes': 1
+        })
+        self.assertEqual(len(list_actions()), 2)

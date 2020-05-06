@@ -6,4 +6,7 @@ class NotFound(Exception):
 
 class AlreadyHasRole(NotAllowed):
     pass
+
+class GameImplementationError(Exception):
+    pass
     
