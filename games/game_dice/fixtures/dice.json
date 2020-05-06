@@ -13,10 +13,10 @@
         }
     },
     {
-        "model": "games.Action",
+        "model": "games.ActionType",
         "fields": {
             "game_id": "Dice",
-            "subtype_id": "Dice_RollAction"
+            "type_id": "Dice_RollAction"
         }
     }
 ]
