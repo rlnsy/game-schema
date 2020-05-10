@@ -9,9 +9,6 @@ class DiceLogic(GameLogic):
         return ['Dice_roller']
 
     def create_action(self, action_type_id, params):
-        """
-        Should create and instance of Action and return it
-        """
         if action_type_id == 'Dice_RollAction':
             def create(num_shakes):
                 return assertions.test_exist(
