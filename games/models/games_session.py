@@ -27,7 +27,7 @@ class State(models.Model):
     state_index = models.IntegerField(null=False)
     session_id = models.ForeignKey(Session, on_delete=models.CASCADE)
 
-class Terminal(models.Model):
+class SessionEnd(models.Model):
     state_id = models.ForeignKey(State, on_delete=models.CASCADE)
     time_at = models.DateTimeField(auto_now_add=True)
 
