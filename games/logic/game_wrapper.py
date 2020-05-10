@@ -3,7 +3,7 @@ from .exceptions import (
     LogicNotImplemented
 )
 from games.api.internal.exceptions import MissingRequiredData
-from .logic_api import ModelParameterError, CalleeError
+from .api.errors import ModelParameterError, CalleeError
 
 def exec_logic(logic_proc, k):
     if not callable(logic_proc):

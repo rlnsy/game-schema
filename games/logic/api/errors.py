@@ -1,5 +1,3 @@
-from games.logic.logic_interface import GameLogic
-
 class CalleeError(Exception):
     pass
 
@@ -17,5 +15,4 @@ class MissingModelParameter(ModelParameterError):
 class CalleeKeyError(CalleeError):
     pass
 
-from games.api.internal.util.model_ops import assert_nexist
 from games.api.internal.exceptions import NotAllowed as ObjectExists
