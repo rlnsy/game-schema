@@ -1,5 +1,4 @@
 #!/bin/sh
 
-python manage.py makemigrations games
-python manage.py makemigrations game_dice
+./make_migrations.sh
 python manage.py migrate
