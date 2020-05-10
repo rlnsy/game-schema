@@ -1,12 +1,5 @@
 from games.logic.api.core import GameLogic
-from games.logic.api.errors import (
-    ObjectExists,
-    MissingModelParameter,
-    CalleeKeyError
-)
-from games.logic.api.models import (
-    assert_nexist
-)
+from games.logic.api import errors, models, assertions
 
 from .models import Roll
 
@@ -20,13 +13,14 @@ class DiceLogic(GameLogic):
         Should create and instance of Action and return it
         """
         if action_type_id == 'Dice_RollAction':
-            try:
-                num_shakes = params['num_shakes']
-                return assert_nexist(Roll.objects.filter(num_shakes=num_shakes),
+            def create(num_shakes):
+                return assertions.test_exist(
+                    Roll.objects.filter(num_shakes=num_shakes),
+                    lambda: Roll.objects.get(num_shakes=num_shakes),
                     lambda: Roll(num_shakes=num_shakes))
-            except KeyError as k:
-                raise MissingModelParameter(k)
-            except ObjectExists:
-                return Roll.objects.get(num_shakes=num_shakes)
+            return assertions.require_in(
+                params,
+                ['num_shakes'],
+                lambda d: create(d['num_shakes']))
         else:
-            raise CalleeKeyError("action_type_id '%s' is invalid" % action_type_id)
+            raise errors.CalleeKeyError("action_type_id '%s' is invalid" % action_type_id)

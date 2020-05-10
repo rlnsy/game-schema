@@ -4,4 +4,4 @@ from django.db.models import (
 
 from games.models import Action
 
-from games.api.internal.util.model_ops import assert_nexist
+from games.api.internal.exceptions import NotAllowed as ObjectExists
