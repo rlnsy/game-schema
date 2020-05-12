@@ -42,7 +42,13 @@ BACKEND_URL_WWW = "%s://www.%s" % (URL_PREFIX, DEPLOYMENT_URL)
 FRONTEND_URL_BSC = "%s://%s" % (URL_PREFIX, DEPLOYMENT_URL)
 FRONTEND_URL_WWW = "%s://www.%s" % (URL_PREFIX, DEPLOYMENT_URL)
 
-ALLOWED_HOSTS = ["0.0.0.0", "localhost", BACKEND_URL, BACKEND_URL_WWW]
+ALLOWED_HOSTS = [
+    "0.0.0.0", 
+    "localhost", 
+    BACKEND_URL, 
+    BACKEND_URL_WWW,
+    DEPLOYMENT_URL
+]
 
 
 # Application definition
