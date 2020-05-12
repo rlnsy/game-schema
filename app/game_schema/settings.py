@@ -39,6 +39,7 @@ with open("deployment.local.json") as f:
 
 BACKEND_URL = "%s://%s" % (URL_PREFIX, DEPLOYMENT_URL)
 BACKEND_URL_WWW = "%s://www.%s" % (URL_PREFIX, DEPLOYMENT_URL)
+BACKEND_URL_WWW_NO_PREFIX = "www.%s" % (URL_PREFIX, DEPLOYMENT_URL)
 FRONTEND_URL_BSC = "%s://%s" % (URL_PREFIX, DEPLOYMENT_URL)
 FRONTEND_URL_WWW = "%s://www.%s" % (URL_PREFIX, DEPLOYMENT_URL)
 
@@ -47,7 +48,8 @@ ALLOWED_HOSTS = [
     "localhost", 
     BACKEND_URL, 
     BACKEND_URL_WWW,
-    DEPLOYMENT_URL
+    DEPLOYMENT_URL,
+    BACKEND_URL_WWW_NO_PREFIX
 ]
 
 
