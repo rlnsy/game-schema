@@ -11,7 +11,7 @@ else
     fi
     chmod +x app/docker_entry.sh
     echo "Going up"
-    docker-compose -f "$CONFIG" up
+    docker-compose -f "$CONFIG" up --build
     echo "Coming down"
     docker-compose -f "$CONFIG" down
 fi
