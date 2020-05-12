@@ -26,12 +26,20 @@ SECRET_KEY = 'mt*c(#x4k**ndmlwjsdj5-mm(hpv7g39l5za+_i0u=&-y1-)57'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-DEPLOYMENT_URL = "http://0.0.0.0"
+DEPLOYMENT_URL = "ERROR"
+URL_PREFIX = "http"
+URL_PORT = "ERROR"
 
 with open("deployment.local.json") as f:
     params = json.loads(f.read())
     DEPLOYMENT_URL = params['url']
+    if params['ssl']: URL_PREFIX="https"
+    URL_PORT = params['port']
     DEBUG = params['debug']
+
+BACKEND_URL = "%s://%s:8000" % (URL_PREFIX, DEPLOYMENT_URL)
+FRONTEND_URL_BSC = "%s://%s:%d" % (URL_PREFIX, DEPLOYMENT_URL, URL_PORT)
+FRONTEND_URL_WWW = "%s://www.%s:%d" % (URL_PREFIX, DEPLOYMENT_URL, URL_PORT)
 
 ALLOWED_HOSTS = ["0.0.0.0", "localhost", DEPLOYMENT_URL]
 
@@ -141,5 +149,6 @@ CORS_ORIGIN_WHITELIST = [
     "http://0.0.0.0:80",
     "http://localhost:80",
     "http://127.0.0.1:80",
-    DEPLOYMENT_URL,
+    FRONTEND_URL_BSC,
+    FRONTEND_URL_WWW
 ]
