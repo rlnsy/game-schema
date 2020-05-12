@@ -38,14 +38,16 @@ export default {
   components: {},
   data() {
     return {
+      appUrl: "LOADING",
       name: "LOADING",
       version: "LOADING"
     }
   },
   async mounted(){
-    let infoResponse = await getInfo()
-    this.name = infoResponse.data['name']
-    this.version = infoResponse.data['version']
+    this.appUrl = process.env.APP_URL;
+    let infoResponse = await getInfo();
+    this.name = infoResponse.data['name'];
+    this.version = infoResponse.data['version'];
   },
   methods: {},
 };
