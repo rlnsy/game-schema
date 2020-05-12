@@ -38,8 +38,8 @@ with open("deployment.local.json") as f:
     DEBUG = params['debug']
 
 BACKEND_URL = "%s://%s" % (URL_PREFIX, DEPLOYMENT_URL)
-FRONTEND_URL_BSC = "%s://%s:%d" % (URL_PREFIX, DEPLOYMENT_URL, URL_PORT)
-FRONTEND_URL_WWW = "%s://www.%s:%d" % (URL_PREFIX, DEPLOYMENT_URL, URL_PORT)
+FRONTEND_URL_BSC = "%s://%s" % (URL_PREFIX, DEPLOYMENT_URL)
+FRONTEND_URL_WWW = "%s://www.%s" % (URL_PREFIX, DEPLOYMENT_URL)
 
 ALLOWED_HOSTS = ["0.0.0.0", "localhost", BACKEND_URL]
 
