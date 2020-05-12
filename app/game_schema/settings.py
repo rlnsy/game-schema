@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import json
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -126,11 +127,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+GUI_CLIENT_URL = "http://0.0.0.0"
+
+with open("deployment.json") as f:
+    GUI_CLIENT_URL = json.loads(f.read())['url']
+
 CORS_ORIGIN_WHITELIST = [
     "http://0.0.0.0",
     "http://localhost",
     "http://127.0.0.1",
     "http://0.0.0.0:80",
     "http://localhost:80",
-    "http://127.0.0.1:80"
+    "http://127.0.0.1:80",
+    GUI_CLIENT_URL
 ]
