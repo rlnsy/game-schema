@@ -37,11 +37,11 @@ with open("deployment.local.json") as f:
     URL_PORT = params['port']
     DEBUG = params['debug']
 
-BACKEND_URL = "%s://%s:8000" % (URL_PREFIX, DEPLOYMENT_URL)
+BACKEND_URL = "%s://%s" % (URL_PREFIX, DEPLOYMENT_URL)
 FRONTEND_URL_BSC = "%s://%s:%d" % (URL_PREFIX, DEPLOYMENT_URL, URL_PORT)
 FRONTEND_URL_WWW = "%s://www.%s:%d" % (URL_PREFIX, DEPLOYMENT_URL, URL_PORT)
 
-ALLOWED_HOSTS = ["0.0.0.0", "localhost", DEPLOYMENT_URL]
+ALLOWED_HOSTS = ["0.0.0.0", "localhost", BACKEND_URL]
 
 
 # Application definition
