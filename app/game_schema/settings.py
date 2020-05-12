@@ -26,7 +26,14 @@ SECRET_KEY = 'mt*c(#x4k**ndmlwjsdj5-mm(hpv7g39l5za+_i0u=&-y1-)57'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["0.0.0.0", "gmbx.xyz", "localhost"]
+DEPLOYMENT_URL = "http://0.0.0.0"
+
+with open("deployment.local.json") as f:
+    params = json.loads(f.read())
+    DEPLOYMENT_URL = params['url']
+    DEBUG = params['debug']
+
+ALLOWED_HOSTS = ["0.0.0.0", "localhost", DEPLOYMENT_URL]
 
 
 # Application definition
@@ -127,11 +134,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-GUI_CLIENT_URL = "http://0.0.0.0"
-
-with open("deployment.json") as f:
-    GUI_CLIENT_URL = json.loads(f.read())['url']
-
 CORS_ORIGIN_WHITELIST = [
     "http://0.0.0.0",
     "http://localhost",
@@ -139,6 +141,5 @@ CORS_ORIGIN_WHITELIST = [
     "http://0.0.0.0:80",
     "http://localhost:80",
     "http://127.0.0.1:80",
-    "http://%s" % GUI_CLIENT_URL,
-    "http://www.%s" % GUI_CLIENT_URL,
+    DEPLOYMENT_URL,
 ]
