@@ -139,5 +139,6 @@ CORS_ORIGIN_WHITELIST = [
     "http://0.0.0.0:80",
     "http://localhost:80",
     "http://127.0.0.1:80",
-    GUI_CLIENT_URL
+    "http://%s" % GUI_CLIENT_URL,
+    "http://www.%s" % GUI_CLIENT_URL,
 ]
