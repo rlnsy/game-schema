@@ -2,5 +2,6 @@
     "url": "<DEPLOYMENT URL>",
     "ssl": false,
     "port": 80,
-    "debug": true
+    "debug": true,
+    "secret_key": "<SECRET KEY>"
 }

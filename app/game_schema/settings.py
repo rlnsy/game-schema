@@ -20,22 +20,20 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'mt*c(#x4k**ndmlwjsdj5-mm(hpv7g39l5za+_i0u=&-y1-)57'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-DEPLOYMENT_URL = "ERROR"
-URL_PREFIX = "http"
-URL_PORT = "ERROR"
 
 with open("deployment.local.json") as f:
+
     params = json.loads(f.read())
+
     DEPLOYMENT_URL = params['url']
-    if params['ssl']: URL_PREFIX="https"
+    URL_PREFIX= "https" if params['ssl'] else "http"
     URL_PORT = params['port']
+
+    # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = params['debug']
+
+    # SECURITY WARNING: keep the secret key used in production secret!
+    SECRET_KEY = params['secret_key']
 
 BACKEND_URL = "%s://%s" % (URL_PREFIX, DEPLOYMENT_URL)
 BACKEND_URL_WWW = "%s://www.%s" % (URL_PREFIX, DEPLOYMENT_URL)
