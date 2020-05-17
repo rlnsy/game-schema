@@ -8,6 +8,8 @@ if [[ $1 == "--frontend" ]]; then
 else
     if [[ $1 == "--full-deployment" ]]; then
         CONFIG="docker/full-stack.yml"
+    elif [[ $1 == "--frontend-prod" ]]; then
+        CONFIG="docker/frontend.yml"
     fi
     chmod +x app/docker_entry.sh
     echo "Going up"
