@@ -2,10 +2,13 @@
   <div id="app">
       <div class="welcome">
       <img
-        src="@/assets/game.png"
+        src="@/assets/casino.png"
         alt="game splash"
       ><br>
       <h1>{{ name }} v{{ version }}</h1>
+      <div class="icon-attrib">
+        <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+      </div>
       </div>
   </div>
 </template>
@@ -25,6 +28,10 @@
         width: auto;
         padding: 20px;
     }
+}
+.icon-attrib {
+  margin-top: 30px;
+  font-size: 12px;
 }
 </style>
 
@@ -68,6 +75,10 @@ h1, h2, h3, h4 {
   font-family: 'Roboto', sans-serif;
   font-weight: 600 !important;
   margin: 0 !important;
+}
+
+a {
+  color: #D32F2F;
 }
 
 #app {
