@@ -19,3 +19,10 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Local Server Config
+nginx.local.conf
+
+# Certificates
+ssl/*
+!ssl/.gitkeep
