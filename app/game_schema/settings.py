@@ -50,6 +50,17 @@ ALLOWED_HOSTS = [
     BACKEND_URL_WWW_NO_PREFIX
 ]
 
+CORS_ORIGIN_WHITELIST = [
+    "http://0.0.0.0",
+    "http://localhost",
+    "http://127.0.0.1",
+    "http://0.0.0.0:80",
+    "http://localhost:80",
+    "http://127.0.0.1:80",
+    FRONTEND_URL_BSC,
+    FRONTEND_URL_WWW
+]
+
 
 # Application definition
 
@@ -149,13 +160,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-CORS_ORIGIN_WHITELIST = [
-    "http://0.0.0.0",
-    "http://localhost",
-    "http://127.0.0.1",
-    "http://0.0.0.0:80",
-    "http://localhost:80",
-    "http://127.0.0.1:80",
-    FRONTEND_URL_BSC,
-    FRONTEND_URL_WWW
-]
+STATIC_ROOT = os.path.join(BASE_DIR, "../server/static/")

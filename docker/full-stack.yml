@@ -1,14 +1,14 @@
 version: '3'
 
 services:
-  application:
-    build: ../app
-    command: bash -c "python manage.py runserver 0.0.0.0:8000"
-    container_name: game_schema_poc
-    volumes:
-      - ../app:/game_schema_poc
-    ports:
-      - "8000:8000"
+#   application:
+#     build: ../app
+#     command: bash -c "python manage.py runserver 0.0.0.0:8000"
+#     container_name: game_schema_poc
+#     volumes:
+#       - ../app:/game_schema_poc
+#     ports:
+#       - "8000:8000"
   frontend:
     build: ../frontend
     volumes:

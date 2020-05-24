@@ -6,9 +6,17 @@ version: '3'
 services:
   application:
     build: ../app
-    command: bash -c "python manage.py runserver 0.0.0.0:8000"
     container_name: game_schema_poc
     volumes:
-      - ../app:/game_schema_poc
+      - ../tmp:/tmp
+    command: bash -c "uwsgi --ini /game_schema_poc/uwsgi.ini"
+  server:
+    build: ../server
+    container_name: nginx_backend
+    volumes:
+        - ../tmp:/tmp
+        - ../logs/server-backend:/var/log/nginx
     ports:
       - "8000:8000"
+    depends_on:
+      - "application"
