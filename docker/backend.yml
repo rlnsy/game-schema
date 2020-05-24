@@ -15,6 +15,7 @@ services:
     container_name: nginx_backend
     volumes:
         - ../tmp:/tmp
+        - ../ssl:/etc/ssl/gmbx
         - ../logs/server-backend:/var/log/nginx
     ports:
       - "8000:8000"

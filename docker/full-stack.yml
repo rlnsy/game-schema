@@ -1,21 +1,21 @@
-version: '3'
+# version: '3'
 
-services:
-#   application:
-#     build: ../app
-#     command: bash -c "python manage.py runserver 0.0.0.0:8000"
-#     container_name: game_schema_poc
+# services:
+# #   application:
+# #     build: ../app
+# #     command: bash -c "python manage.py runserver 0.0.0.0:8000"
+# #     container_name: game_schema_poc
+# #     volumes:
+# #       - ../app:/game_schema_poc
+# #     ports:
+# #       - "8000:8000"
+#   frontend:
+#     build: ../frontend
 #     volumes:
-#       - ../app:/game_schema_poc
+#         - "/var/log/nginx/error.log:/var/log/nginx/error.log"
+#         - "/var/log/nginx/access.log:/var/log/nginx/access.log"
 #     ports:
-#       - "8000:8000"
-  frontend:
-    build: ../frontend
-    volumes:
-        - "/var/log/nginx/error.log:/var/log/nginx/error.log"
-        - "/var/log/nginx/access.log:/var/log/nginx/access.log"
-    ports:
-        - "80:80"
-        - "443:443"
-    depends_on:
-        - "application"
+#         - "80:80"
+#         - "443:443"
+#     depends_on:
+#         - "application"

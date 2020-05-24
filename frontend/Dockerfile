@@ -10,8 +10,7 @@ RUN yarn build
 FROM nginx:1.15-alpine
 COPY --from=build-deps /app/dist /usr/share/nginx/html
 COPY ./nginx.local.conf /etc/nginx/nginx.conf
-COPY ./ssl/gmbx.xyz.crt /etc/nginx/gmbx.xyz.crt
-COPY ./ssl/gmbx.xyz.key /etc/nginx/gmbx.xyz.key
+RUN mkdir /etc/ssl/gmbx
 EXPOSE 80
 EXPOSE 443
 CMD ["nginx", "-g", "daemon off;"]
