@@ -2,3 +2,4 @@
 static/*
 media/*
 !*/**/.gitkeep
+nginx.local.conf
