@@ -19,5 +19,6 @@ services:
         - ../logs/server-backend:/var/log/nginx
     ports:
       - "8000:8000"
+      - "8443:8443"
     depends_on:
       - "application"
