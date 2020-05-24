@@ -1,2 +1,0 @@
-2020/05/24 18:25:59 [error] 7#7: *1 directory index of "/usr/share/nginx/media/" is forbidden, client: 172.18.0.1, server: server, request: "GET /media/ HTTP/1.1", host: "localhost:8000"
-2020/05/24 18:26:05 [error] 7#7: *1 directory index of "/usr/share/nginx/media/" is forbidden, client: 172.18.0.1, server: server, request: "GET /media/ HTTP/1.1", host: "localhost:8000"
