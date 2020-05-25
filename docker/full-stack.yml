@@ -23,5 +23,5 @@ services:
             - "443:443"
         volumes:
             - ../ssl:/etc/ssl/gmbx
-            depends_on:
-                - "server"
+        depends_on:
+            - "server"
