@@ -1,19 +1,30 @@
 #!/bin/bash
 
-CONFIG="docker/backend.yml"
+DEFAULT_STACK="backend"
 
-if [[ $1 == "--frontend" ]]; then
+dev_frontend () {
     cd frontend
     yarn install && yarn serve
-else
-    if [[ $1 == "--full-deployment" ]]; then
-        CONFIG="docker/full-stack.yml"
-    elif [[ $1 == "--frontend-prod" ]]; then
-        CONFIG="docker/frontend.yml"
-    fi
-    chmod +x app/docker_entry.sh
-    echo "Going up"
-    docker-compose -f "$CONFIG" up --build
-    echo "Coming down"
-    docker-compose -f "$CONFIG" down
+    exit 0
+}
+
+STACK=$DEFAULT_STACK
+if [[ ! -z "$1" ]]; then 
+    STACK=$1 
 fi
+
+if      [[ $STACK == "frontend"     ]]; then dev_frontend
+elif    [[ $STACK == "backend"      ]]; then CONFIG="docker/backend-dev.yml"
+elif    [[ $STACK == "production"   ]]; then CONFIG="docker/full-stack.yml"
+else
+        echo "ERROR: Invalid stack"
+        exit 1
+fi
+
+chmod +x app/docker_entry.sh
+echo "Going up"
+docker-compose -f "$CONFIG" up --build
+echo "Coming down"
+docker-compose -f "$CONFIG" down
+
+exit 0
