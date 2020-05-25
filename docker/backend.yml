@@ -7,14 +7,11 @@ services:
   application:
     build: ../app
     container_name: game_schema_poc
-    volumes:
-      - ../tmp:/tmp
     command: bash -c "uwsgi --ini /game_schema_poc/uwsgi.ini"
   server:
     build: ../server
     container_name: nginx_backend
     volumes:
-        - ../tmp:/tmp
         - ../ssl:/etc/ssl/gmbx
         - ../logs/server-backend:/var/log/nginx
     ports:
