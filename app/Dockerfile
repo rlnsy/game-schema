@@ -3,8 +3,8 @@
 
 FROM python:3.7
 ENV PYTHONUNBUFFERED 1
-RUN mkdir /game_schema_poc
-ADD . /game_schema_poc/
-WORKDIR /game_schema_poc
+RUN mkdir /app
+ADD . /app/
+WORKDIR /app
 RUN pip install -r requirements.txt
-ENTRYPOINT ["/game_schema_poc/docker_entry.sh"]
+ENTRYPOINT ["/app/docker_entry.sh"]

@@ -21,18 +21,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 
-with open("deployment.local.json") as f:
-
+with open("config/config.json") as f:
+    """
+    Load configuration from disk
+    """
     params = json.loads(f.read())
-
-    DEPLOYMENT_URL = params['url']
+    DEPLOYMENT_URL = params['frontend_url']
     URL_PREFIX= "https" if params['ssl'] else "http"
-    URL_PORT = params['port']
-
-    # SECURITY WARNING: don't run with debug turned on in production!
+    URL_PORT = params['frontend_port']
     DEBUG = params['debug']
-
-    # SECURITY WARNING: keep the secret key used in production secret!
     SECRET_KEY = params['secret_key']
 
 BACKEND_URL = "%s://%s" % (URL_PREFIX, DEPLOYMENT_URL)

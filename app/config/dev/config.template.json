@@ -1,7 +1,7 @@
 {
-    "url": "<DEPLOYMENT URL>",
+    "frontend_url": "0.0.0.0",
     "ssl": false,
-    "port": 80,
+    "frontend_port": 8080,
     "debug": true,
     "secret_key": "<SECRET KEY>"
 }

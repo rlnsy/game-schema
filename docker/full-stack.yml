@@ -3,7 +3,8 @@ version: '3'
 services:
     application:
         build: ../app
-        container_name: game_schema_poc
+        volumes:
+            - "../app/config/prod:/app/config"
         command: bash -c "uwsgi --ini /game_schema_poc/uwsgi.ini"
     server:
         build: ../server
