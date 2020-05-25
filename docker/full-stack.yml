@@ -5,7 +5,7 @@ services:
         build: ../app
         volumes:
             - "../app/config/prod:/app/config"
-        command: bash -c "uwsgi --ini /game_schema_poc/uwsgi.ini"
+        command: bash -c "uwsgi --ini /app/uwsgi.ini"
     server:
         build: ../server
         container_name: nginx_backend
