@@ -1,7 +1,0 @@
-{
-    "frontend_url": "0.0.0.0",
-    "ssl": false,
-    "frontend_port": 8080,
-    "debug": true,
-    "secret_key": "<SECRET KEY>"
-}
