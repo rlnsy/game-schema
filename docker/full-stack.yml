@@ -10,7 +10,7 @@ services:
         build: ../server
         container_name: nginx_backend
         volumes:
-            - ../ssl:/etc/ssl/gmbx
+            - /etc/ssl/gmbx:/etc/ssl/gmbx
             - ../logs/server-backend:/var/log/nginx
         ports:
             - "8000:8000"
@@ -23,6 +23,6 @@ services:
             - "80:80"
             - "443:443"
         volumes:
-            - ../ssl:/etc/ssl/gmbx
+            - /etc/ssl/gmbx:/etc/ssl/gmbx
         depends_on:
             - "server"
